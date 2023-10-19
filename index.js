@@ -14,7 +14,6 @@ app.use(express.json());
 // --atlas-server-start-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.zearr5n.mongodb.net/?retryWrites=true&w=majority`
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -25,8 +24,24 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-   
+
     await client.connect();
+
+    const Productdatabase = client.db("ProductDB").collection("Allproducts");
+
+    app.get('/Products', async (req, res) => {
+      const cursor = Productdatabase.find();
+      const result = await cursor.toArray();
+      res.send(result)
+    })
+ 
+
+
+
+
+
+
+
 
 
 
@@ -47,7 +62,7 @@ async function run() {
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } catch(error){
+  } catch (error) {
     console.log(error)
   }
 }
@@ -57,11 +72,11 @@ run()
 
 
 app.get('/', (req, res) => {
-    res.send('Electro server is running !')
+  res.send('Electro server is running !')
 })
 
 app.listen(port, () => {
-    console.log(`Electro sever is running on port ${port}`)
+  console.log(`Electro sever is running on port ${port}`)
 })
 
 
