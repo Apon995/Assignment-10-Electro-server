@@ -34,7 +34,56 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result)
     })
- 
+
+    app.get('/Apple', async (req, res) => {
+      const singledata = { "brand_Name": "Apple" }
+      const cursor = Productdatabase.find(singledata);
+      const result = await cursor.toArray();
+
+      res.send(result)
+    })
+
+    app.get('/Samsung', async (req, res) => {
+      const singledata = { "brand_Name": "Samsung" }
+      const cursor = Productdatabase.find(singledata);
+      const result = await cursor.toArray();
+
+      res.send(result)
+    })
+    
+    app.get('/Sony', async (req, res) => {
+      const singledata = { "brand_Name": "Sony" }
+      const cursor = Productdatabase.find(singledata);
+      const result = await cursor.toArray();
+
+      res.send(result)
+    })
+
+    app.get('/Google', async (req, res) => {
+      const singledata = { "brand_Name": "Google" }
+      const cursor = Productdatabase.find(singledata);
+      const result = await cursor.toArray();
+
+      res.send(result)
+    })
+
+    app.get('/Intel', async (req, res) => {
+      const singledata = { "brand_Name": "Intel" }
+      const cursor = Productdatabase.find(singledata);
+      const result = await cursor.toArray();
+
+      res.send(result)
+    })
+
+    app.get('/LG', async (req, res) => {
+      const singledata = { "brand_Name": "LG" }
+      const cursor = Productdatabase.find(singledata);
+      const result = await cursor.toArray();
+
+      res.send(result)
+    })
+
+
 
 
 
