@@ -29,6 +29,8 @@ async function run() {
 
     const Productdatabase = client.db("ProductDB").collection("Allproducts");
 
+
+    
     app.get('/Products', async (req, res) => {
       const cursor = Productdatabase.find();
       const result = await cursor.toArray();
@@ -50,7 +52,7 @@ async function run() {
 
       res.send(result)
     })
-    
+
     app.get('/Sony', async (req, res) => {
       const singledata = { "brand_Name": "Sony" }
       const cursor = Productdatabase.find(singledata);
@@ -83,6 +85,14 @@ async function run() {
       res.send(result)
     })
 
+
+
+    // ----post--database--
+    app.post('/Products', async (req, res) => {
+      const newProduct = req.body ; 
+      const result = await Productdatabase.insertOne(newProduct);
+      res.send(result);
+    })
 
 
 
