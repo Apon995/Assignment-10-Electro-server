@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -30,7 +30,8 @@ async function run() {
     const Productdatabase = client.db("ProductDB").collection("Allproducts");
 
 
-    
+    // ---get-data-from-database--
+
     app.get('/Products', async (req, res) => {
       const cursor = Productdatabase.find();
       const result = await cursor.toArray();
@@ -85,12 +86,41 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/Products/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await Productdatabase.findOne(query)
+
+      res.send(result)
+    })
+
 
 
     // ----post--database--
     app.post('/Products', async (req, res) => {
-      const newProduct = req.body ; 
-      const result = await Productdatabase.insertOne(newProduct);
+      const newProduct = req.body;
+      const productobj = {
+        product_Image: newProduct?.ImageUrl,
+        product_Name: newProduct.Name,
+        brand_Name: newProduct.Brand,
+        product_type: newProduct.Type,
+        price: newProduct.Price,
+        short_description: newProduct.Descripition,
+        rating: newProduct.Rating
+
+      }
+      const result = await Productdatabase.insertOne(productobj);
+      res.send(result);
+    })
+
+
+    // ---delete-from-database--
+
+    app.delete('/Products/:id', async (req, res) => {
+      const Id = req.params.id;
+      const query = { _id: new ObjectId(Id) }
+
+      const result = await Productdatabase.deleteOne(query)
       res.send(result);
     })
 
